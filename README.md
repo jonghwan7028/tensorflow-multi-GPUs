@@ -1,4 +1,4 @@
-# Ubuntu 18.04, Nvidia GeForce RTX 2080 Ti, tensorflow, Jupyter Installation
+# Ubuntu 18.04, Nvidia GeForce RTX 2080 Ti, tensorflow, OpenCV, Jupyter Installation
 
 Nvidia 에서 최근에 RTX 2080 Ti를 출시하였습니다. 가성비가 상당히 좋기 때문에 많은 분들이 관심을 갖고 있습니다. 저는 이번에 이것을 설치해보려고 합니다. 인터넷에 많은 설치 튜토리얼이 나와 있음에도 불구하고 많은 어려움과 Trouble shooting이 있었습니다. 그래서 이번 설치 튜터리얼을 만들었으니, 도움이 되기를 바랍니다. ^^
 
@@ -128,6 +128,7 @@ source ~/.bashrc
 ```
 nvcc --version
 ```
+그러면 아마 설치된 버전이 나타납니다. 제대로 설치된 것이죠 ^^
 
 ## 4. cuDNN Install 하기
 지금까지 수고많으셨습니다. 이제부터는 cuDNN을 설치하겠습니다. 홈페이지(https://developer.nvidia.com/rdp/cudnn-download) 가셔서 CUDA Toolkit 10.0 에 맞는 파일을 다운받습니다. 처음이시면 Join을 하셔야 합니다. 동의를 한다음에 아래의 옵션으로 진행합니다.
@@ -138,12 +139,13 @@ nvcc --version
 cd Donwload
 tar -xzvf cudnn-10.0-linux-x64-v7.6.3.30.tgz
 ```
-압축이 해제되면 동일한 폴더의 터미널 화면에서 다음과 같은 명령어를 실행합니다.
+압축이 해제되면 동일한 폴더(~Download/)의 터미널 화면에서 다음과 같은 명령어를 실행합니다.
 ```
 sudo cp cuda/include/cudnn.h /usr/local/cuda/include
 sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
 sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 ```
+이러한 명령어를 입력하면 cuDNN 설치가 종료됩니다. ^^
 
 ## 5. Tensorflow Install 하기
 저는 가상환경을 만들어 텐서플로를 설치하겠습니다. 우선 터미널 화면에서 아래와 같은 명령어를 입력하여 기초적인 프로그램을 설치합니다.
@@ -152,4 +154,35 @@ sudo apt update
 sudo apt install python3-dev python3-pip
 sudo pip3 install -U virtualenv  
 ```
+그런 다음, 이름이 'tf'인 가상환경을 만들어 보겠습니다. 아래와 같이 터미널 화면에서 명령어를 실행합니다.
+```
+virtualenv --system-site-packages -p python3 ./tf
+```
+이번에는 방금 만든 'tf' 이름의 가상환경을 실행해 보겠습니다. 아래와 같이 터미널 화면에서 명령어를 실행합니다.
+```
+source ./tf/bin/activate
+```
+자 이번에는 pip 를 업데이트 하겠습니다.
+```
+pip install --upgrade pip
+```
+그리고 tensorflow-gpu를 설치하겠습니다. 지금 설치된 것은 tensorflow v1.14 에 적합합니다. 따라서 아래와 같이 실행합니다.
+```
+pip install tensorflow-gpu==1.14.0
+```
+제대로 설치 되었는지 다음과 같이 실행해 봅니다.
+```
+python -c "import tensorflow as tf;print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+```
 
+## 6. OpenCV Install 하기
+아래에 다음과 같은 명령어를 터미널 화면에 입력합니다.
+```
+pip install opencv-python
+```
+
+## 7. Jupyter Install 하기
+저는 개인적으로 Jupyter notebook 과 Jupyter lab을 즐겨 사용합니다. Jupyter 설치는 다음과 같습니다.
+```
+pip install jupyter
+```
