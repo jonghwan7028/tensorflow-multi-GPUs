@@ -185,4 +185,5 @@ pip install opencv-python
 저는 개인적으로 Jupyter notebook 과 Jupyter lab을 즐겨 사용합니다. Jupyter 설치는 다음과 같습니다.
 ```
 pip install jupyter
+pip install jupyterlab
 ```
